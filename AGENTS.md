@@ -26,7 +26,14 @@
 - 默认使用 GB/T 7714-2025 参考文献格式。
 - 提供公式、图表、单位、代码清单、TikZ、CircuitikZ、附录和参考文献的最小可用示例。
 
-本项目不追求复杂封面、学校模板、学位论文结构、自动化出版系统或过度美化。
+本模板不是完整 thesis class，也不内置学校专用流程；但支持正式报告常见结构，包括 PDF 封面、中英文摘要、前置页码、正文页码重置、附录和参考文献。
+
+## 命名前缀规则
+
+本项目的用户级自定义命令和环境必须使用 `cqt` 前缀。  
+不要新增无前缀的全局用户命令。  
+不要恢复 `\carlosfrontmatter`、`\carlosmainmatter`。  
+本项目尚未正式发布，pre-release 阶段允许 breaking changes，不需要为旧命令保留兼容 alias。
 
 ## 硬性禁止事项
 
@@ -101,9 +108,12 @@ XeLaTeX + biblatex + biber + GB/T 7714-2025
 ├── AGENTS.md
 ├── doc/
 │   └── bibfile.bib
+├── cover/
+│   └── .gitkeep
 ├── img/
 ├── page/
-│   ├── abstract.tex
+│   ├── abstract_zh.tex
+│   ├── abstract_en.tex
 │   ├── content.tex
 │   ├── appendix.tex
 │   └── examples/
