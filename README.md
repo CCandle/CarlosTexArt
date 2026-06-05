@@ -21,6 +21,12 @@
 
 默认编译输出位于 `build/main.pdf`。模板分发包不应包含根目录 `main.pdf` 或 `build/` 等编译产物。
 
+## Agent 使用说明
+
+如果使用 OpenCode、Codex、Claude Code 等 agent 修改本模板，请先让 agent 阅读 `AGENTS.md`。
+
+`README.md` 面向人类使用者，说明环境、目录结构和日常使用方式；`AGENTS.md` 面向 LLM agent，定义修改边界、禁止事项、验证要求和停止条件。
+
 ## 环境自检
 
 ```bash
@@ -44,6 +50,7 @@ kpsewhich pgfplots.sty
 ## 目录结构
 
 ```
+├── AGENTS.md                   # LLM agent 修改纪律
 ├── CarlosTexArt.cls            # 模板类文件（一般无需修改）
 ├── main.tex                    # 主文件（改标题、作者、加载 biblatex）
 ├── page/
@@ -61,7 +68,7 @@ kpsewhich pgfplots.sty
 ├── img/                        # 图片文件夹
 ├── src/
 │   └── pid_controller.py       # 代码引用示例
-├── sty/                        # 备用目录
+├── sty/                        # 仅用于项目自定义的小型宏包，不建议放入 TeX Live/CTAN 已提供的大型 `.sty`、`.bst` 或字体文件
 └── .vscode/
     ├── settings.json           # LaTeX Workshop 配置
     └── latex.code-snippets     # 常用代码片段
@@ -71,7 +78,7 @@ kpsewhich pgfplots.sty
 
 - **标题/作者**：改 `main.tex` 中的 `\title{}` 和 `\author{}`
 - **参考文献**：在 `doc/bibfile.bib` 中添加条目
-- **添加章节**：在 `page/` 下新建 `.tex` 文件，在 `main.tex` 中用 `\include{}` 引入
+- **添加章节**：在 `page/` 下新建 `.tex` 文件，并在 `main.tex` 中引入。小节、示例和局部片段推荐使用 `\input{}`；较大的章节可以使用 `\include{}`，它会自动分页，并支持 `\includeonly{}` 局部编译。
 - **图片**：放在 `img/` 目录下
 - **代码**：放在 `src/` 目录下
 - **工程示例**：在 `page/examples/` 中参考
