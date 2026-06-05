@@ -1,5 +1,17 @@
 # CarlosTexArt
 
+<p align="center">
+  <a href="https://github.com/CCandle/CarlosTexArt/actions/workflows/build.yml">
+    <img alt="Build LaTeX" src="https://github.com/CCandle/CarlosTexArt/actions/workflows/build.yml/badge.svg">
+  </a>
+  <a href="https://github.com/CCandle/CarlosTexArt/releases/latest">
+    <img alt="GitHub Release" src="https://img.shields.io/github/v/release/CCandle/CarlosTexArt?label=release">
+  </a>
+  <a href="LICENSE">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg">
+  </a>
+</p>
+
 轻量、现代、工程友好的中文 LaTeX 论文/报告模板。
 
 适用于中文科技论文、课程报告、实验报告、工程文档和项目阶段报告。默认使用 XeLaTeX、biblatex/biber、GB/T 7714-2025，并提供 VS Code + LaTeX Workshop 开箱配置。
@@ -30,7 +42,11 @@
 
 ## 预览
 
-示例 PDF 建议通过 GitHub Releases 发布，避免将编译产物提交到主分支。
+示例 PDF 可在 [Releases](../../releases) 中下载。
+
+<p align="center">
+  <img src="docs/preview.png" alt="CarlosTexArt preview" width="800">
+</p>
 
 ## 前置依赖
 

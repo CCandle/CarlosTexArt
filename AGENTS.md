@@ -32,7 +32,7 @@
 本项目的用户级自定义命令和环境必须使用 `cqt` 前缀。  
 不要新增无前缀的全局用户命令。  
 不要恢复 `\carlosfrontmatter`、`\carlosmainmatter`。  
-本项目尚未正式发布，pre-release 阶段允许 breaking changes，不需要为旧命令保留兼容 alias。
+本项目已进入公开发布阶段。除非用户明确要求，否则不要随意引入 breaking changes；如确需破坏兼容，应在 README、AGENTS.md 和 Release Notes 中明确说明。
 
 ## 硬性禁止事项
 
