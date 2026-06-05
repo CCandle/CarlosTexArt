@@ -56,7 +56,7 @@
 
 示例 PDF 可在 [Releases](../../releases) 中下载。
 
-未来 release assets 会提供 example PDF 和 starter zip。普通 push / pull request 的 GitHub Actions artifact 也会产出 example PDF 和 starter zip，便于发布前检查。
+最新版本的 example PDF 和 starter zip 可在 [Releases](../../releases) 中下载。普通 push / pull request 的 GitHub Actions artifact 也会产出 example PDF 和 starter zip，便于发布前检查。
 
 ## 前置依赖
 

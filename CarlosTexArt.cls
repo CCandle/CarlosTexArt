@@ -1,4 +1,4 @@
-\ProvidesClass{CarlosTexArt}[2026/06/05 v0.2.0-dev General LaTeX template for scientific papers by Carlos QU]
+\ProvidesClass{CarlosTexArt}[2026/06/05 v0.2.0 General LaTeX template for scientific papers by Carlos QU]
 \NeedsTeXFormat{LaTeX2e}
 
 \DeclareOption*{%
