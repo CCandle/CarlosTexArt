@@ -28,6 +28,8 @@
 *.dvi
 *.ps
 *.pdf
+!cover/
+!cover/*.pdf
 *.bcf
 *.run.xml
 *.xdv
