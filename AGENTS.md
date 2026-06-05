@@ -56,7 +56,7 @@
 - `main.tex`：标题、作者、biblatex 配置、正文入口。
 - `page/*.tex`：摘要、正文、附录。
 - `page/examples/*.tex`：示例内容。
-- `doc/bibfile.bib`：参考文献条目。
+- `refs/bibfile.bib`：参考文献条目。
 - `README.md`：人类使用说明。
 - `AGENTS.md`：agent 执行纪律。
 - `.vscode/settings.json`：LaTeX Workshop 编译配置。
@@ -85,7 +85,7 @@ XeLaTeX + biblatex + biber + GB/T 7714-2025
     gbpub=false
 ]{biblatex}
 
-\addbibresource{doc/bibfile.bib}
+\addbibresource{refs/bibfile.bib}
 ```
 
 禁止恢复以下旧命令：
@@ -105,10 +105,10 @@ XeLaTeX + biblatex + biber + GB/T 7714-2025
 ├── CarlosTexArt.cls
 ├── README.md
 ├── AGENTS.md
-├── doc/
+├── assets/
+│   └── preview.png
+├── refs/
 │   └── bibfile.bib
-├── cover/
-│   └── .gitkeep
 ├── img/
 ├── page/
 │   ├── abstract_zh.tex
@@ -124,9 +124,12 @@ XeLaTeX + biblatex + biber + GB/T 7714-2025
 
 * 正文内容放在 `page/`。
 * 示例内容放在 `page/examples/`。
-* 图片放在 `img/`。
-* 代码示例放在 `src/`。
-* 参考文献放在 `doc/bibfile.bib`。
+* 仓库展示资产放在 `assets/`，不要把 `assets/preview.png` 复用为正文示例图。
+* LaTeX 正文图片放在 `img/`。
+* LaTeX 代码清单引用的源码放在 `src/`。
+* 参考文献放在 `refs/bibfile.bib`。
+* 外部 PDF 封面目录 `cover/` 由用户按需创建，不用 `.gitkeep` 保留。
+* starter zip 里不要包含 `.git/`、`.github/`、`.gitignore`、`.gitattributes`、`.gitkeep` 等 Git 相关文件。
 
 ## `\input{}` 与 `\include{}` 使用规则
 
@@ -156,7 +159,7 @@ find . -maxdepth 3 -type f | sort
 main.tex
 CarlosTexArt.cls
 README.md
-doc/bibfile.bib
+refs/bibfile.bib
 .vscode/settings.json
 ```
 
@@ -193,6 +196,7 @@ latexmk -xelatex -synctex=1 -interaction=nonstopmode -file-line-error -outdir=bu
 
 ```text
 build/
+dist/
 main.pdf
 *.aux
 *.bbl
@@ -218,7 +222,7 @@ CarlosTexArt.cls
 README.md
 AGENTS.md
 LICENSE
-doc/bibfile.bib
+refs/bibfile.bib
 img/example.png
 src/pid_controller.py
 page/*.tex

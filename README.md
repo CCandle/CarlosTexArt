@@ -17,7 +17,7 @@
 适用于中文科技论文、课程报告、实验报告、工程文档和项目阶段报告。默认使用 XeLaTeX、biblatex/biber、GB/T 7714-2025，并提供 VS Code + LaTeX Workshop 开箱配置。
 
 <p align="center">
-  <img src="docs/preview.png" alt="CarlosTexArt preview" width="900">
+  <img src="assets/preview.png" alt="CarlosTexArt preview" width="800">
 </p>
 
 <p align="center">
@@ -55,6 +55,8 @@
 ## 预览
 
 示例 PDF 可在 [Releases](../../releases) 中下载。
+
+未来 release assets 会提供 example PDF 和 starter zip。普通 push / pull request 的 GitHub Actions artifact 也会产出 example PDF 和 starter zip，便于发布前检查。
 
 ## 前置依赖
 
@@ -151,7 +153,7 @@ kpsewhich pgfplots.sty
 
 - 用户可以用 Word/docx 填写学校或课程封面
 - 导出为 PDF
-- 放到 `cover/cover.pdf`
+- 自行创建 `cover/` 目录，并放到 `cover/cover.pdf`
 - 在 `main.tex` 中使用：
 
   ```tex
@@ -164,8 +166,11 @@ kpsewhich pgfplots.sty
 ├── AGENTS.md                   # LLM agent 修改纪律
 ├── CarlosTexArt.cls            # 模板类文件（一般无需修改）
 ├── main.tex                    # 主文件（改标题、作者、加载 biblatex）
-├── cover/                      # 外部 PDF 封面目录
-│   └── .gitkeep
+├── assets/
+│   └── preview.png             # GitHub README / 项目展示资产
+├── refs/
+│   └── bibfile.bib             # 参考文献数据库
+├── cover/                      # 用户可自行创建的外部 PDF 封面目录
 ├── page/
 │   ├── abstract_zh.tex         # 中文摘要
 │   ├── abstract_en.tex         # 英文摘要
@@ -177,11 +182,12 @@ kpsewhich pgfplots.sty
 │       ├── code.tex            # 代码清单示例
 │       ├── tikz.tex            # TikZ 框图示例
 │       └── circuitikz.tex      # CircuitikZ 电路图示例
-├── doc/
-│   └── bibfile.bib             # 参考文献数据库
-├── img/                        # 图片文件夹
+├── img/
+│   └── example.png             # LaTeX 正文示例图片
 ├── src/
 │   └── pid_controller.py       # 代码引用示例
+├── tools/
+│   └── make_starter_package.py # 生成干净 starter zip
 └── .vscode/
     ├── settings.json           # LaTeX Workshop 配置
     └── latex.code-snippets     # 常用代码片段
@@ -190,12 +196,13 @@ kpsewhich pgfplots.sty
 ## 自定义
 
 - **标题/作者**：改 `main.tex` 中的 `\title{}` 和 `\author{}`
-- **参考文献**：在 `doc/bibfile.bib` 中添加条目
+- **参考文献**：在 `refs/bibfile.bib` 中添加条目
 - **添加章节**：在 `page/` 下新建 `.tex` 文件，并在 `main.tex` 中引入。
   顶层文档单元（摘要、正文章节、附录）推荐使用 `\include{}`，它会分页并生成独立 `.aux` 文件，方便 `\includeonly{}` 局部编译。
   局部片段和示例推荐使用 `\input{}`，它是原地插入，适合小片段。
 - **图片**：放在 `img/` 目录下
 - **代码**：放在 `src/` 目录下
+- **展示资产**：`assets/preview.png` 仅用于 GitHub README / 项目展示，不作为正文示例图
 - **工程示例**：在 `page/examples/` 中参考
 - **GB/T 7714 版本**：如果学校/期刊仍要求 GB/T 7714-2015，可以把 `main.tex` 里的 `style=gb7714-2025` 改成 `style=gb7714-2015`
 
