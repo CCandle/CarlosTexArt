@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  release:
+  build-assets:
     runs-on: ubuntu-latest
     container: texlive/texlive:latest
 
@@ -26,12 +26,24 @@ jobs:
           cp build/main.pdf "dist/CarlosTexArt-${VERSION}-example.pdf"
           python tools/make_starter_package.py --version "${VERSION}" --output "dist/CarlosTexArt-${VERSION}-starter.zip"
 
-      - name: Install GitHub CLI
-        run: |
-          if ! command -v gh >/dev/null 2>&1; then
-            apt-get update
-            apt-get install -y gh
-          fi
+      - name: Upload release assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-assets
+          path: |
+            dist/CarlosTexArt-${{ github.ref_name }}-example.pdf
+            dist/CarlosTexArt-${{ github.ref_name }}-starter.zip
+
+  release:
+    needs: build-assets
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download release assets
+        uses: actions/download-artifact@v4
+        with:
+          name: release-assets
+          path: dist
 
       - name: Create GitHub Release
         env:
