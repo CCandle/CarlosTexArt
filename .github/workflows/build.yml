@@ -15,8 +15,13 @@ jobs:
       - name: Build PDF
         run: latexmk -xelatex -synctex=1 -interaction=nonstopmode -file-line-error -outdir=build main.tex
 
-      - name: Upload PDF artifact
+      - name: Build starter package
+        run: python tools/make_starter_package.py --version dev --output dist/CarlosTexArt-dev-starter.zip
+
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: CarlosTexArt-example
-          path: build/main.pdf
+          name: CarlosTexArt-build-artifacts
+          path: |
+            build/main.pdf
+            dist/CarlosTexArt-dev-starter.zip
