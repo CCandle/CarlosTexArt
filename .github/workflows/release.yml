@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    container: texlive/texlive:latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build PDF
+        run: latexmk -xelatex -synctex=1 -interaction=nonstopmode -file-line-error -outdir=build main.tex
+
+      - name: Prepare release assets
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          mkdir -p dist
+          cp build/main.pdf "dist/CarlosTexArt-${VERSION}-example.pdf"
+          python tools/make_starter_package.py --version "${VERSION}" --output "dist/CarlosTexArt-${VERSION}-starter.zip"
+
+      - name: Install GitHub CLI
+        run: |
+          if ! command -v gh >/dev/null 2>&1; then
+            apt-get update
+            apt-get install -y gh
+          fi
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          cat > release-notes.md <<EOF
+          # CarlosTexArt ${VERSION}
+
+          CarlosTexArt ${VERSION} release.
+
+          ## Highlights
+
+          - Reorganize repository assets and reference database directories.
+          - Move README preview image to \`assets/\`.
+          - Move bibliography database to \`refs/bibfile.bib\`.
+          - Add class version metadata.
+          - Add clean starter package generation.
+          - Provide release assets for both example PDF and starter zip.
+
+          ## Assets
+
+          - \`CarlosTexArt-${VERSION}-example.pdf\`: example PDF generated from the full template.
+          - \`CarlosTexArt-${VERSION}-starter.zip\`: clean starter package for new documents.
+          EOF
+
+          gh release create "${VERSION}" \
+            "dist/CarlosTexArt-${VERSION}-example.pdf" \
+            "dist/CarlosTexArt-${VERSION}-starter.zip" \
+            --title "CarlosTexArt ${VERSION}" \
+            --notes-file release-notes.md \
+            --latest
