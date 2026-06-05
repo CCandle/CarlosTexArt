@@ -169,13 +169,13 @@
 \renewcommand{\footrulewidth}{0mm}
 
 % Matter control for formal reports
-\newcommand{\carlosfrontmatter}{%
+\newcommand{\cqtfrontmatter}{%
     \cleardoublepage
     \pagenumbering{Roman}
     \setcounter{page}{1}
 }
 
-\newcommand{\carlosmainmatter}{%
+\newcommand{\cqtmainmatter}{%
     \cleardoublepage
     \pagenumbering{arabic}
     \setcounter{page}{1}
