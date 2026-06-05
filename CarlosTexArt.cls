@@ -70,6 +70,15 @@
 \RequirePackage{bookmark}
 \urlstyle{same}
 
+\makeatletter
+\AtBeginDocument{%
+    \hypersetup{
+        pdftitle={\@title},
+        pdfauthor={\@author}
+    }%
+}
+\makeatother
+
 % Other utilities
 \RequirePackage{pdfpages}
 \RequirePackage{xpatch}

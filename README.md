@@ -51,6 +51,23 @@
 
 默认编译输出位于 `build/main.pdf`。模板分发包不应包含根目录 `main.pdf` 或 `build/` 等编译产物。
 
+## 命令行编译
+
+推荐使用 `latexmk`：
+
+```bash
+latexmk -xelatex -outdir=build main.tex
+```
+
+手动排查参考文献问题时，可以按以下顺序编译：
+
+```bash
+xelatex -output-directory=build main.tex
+biber --input-directory=build --output-directory=build main
+xelatex -output-directory=build main.tex
+xelatex -output-directory=build main.tex
+```
+
 ## Agent 使用说明
 
 如果使用 OpenCode、Codex、Claude Code 等 agent 修改本模板，请先让 agent 阅读 `AGENTS.md`。
