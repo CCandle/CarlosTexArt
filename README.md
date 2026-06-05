@@ -16,6 +16,18 @@
 
 适用于中文科技论文、课程报告、实验报告、工程文档和项目阶段报告。默认使用 XeLaTeX、biblatex/biber、GB/T 7714-2025，并提供 VS Code + LaTeX Workshop 开箱配置。
 
+<p align="center">
+  <img src="docs/preview.png" alt="CarlosTexArt preview" width="900">
+</p>
+
+<p align="center">
+  <a href="https://github.com/CCandle/CarlosTexArt/releases/latest">下载示例 PDF</a>
+  ·
+  <a href="#快速上手">快速上手</a>
+  ·
+  <a href="#常用模板命令">模板命令</a>
+</p>
+
 ## 特性
 
 - 中文友好：基于 `ctexart` 与 XeLaTeX
@@ -43,10 +55,6 @@
 ## 预览
 
 示例 PDF 可在 [Releases](../../releases) 中下载。
-
-<p align="center">
-  <img src="docs/preview.png" alt="CarlosTexArt preview" width="800">
-</p>
 
 ## 前置依赖
 
@@ -174,7 +182,6 @@ kpsewhich pgfplots.sty
 ├── img/                        # 图片文件夹
 ├── src/
 │   └── pid_controller.py       # 代码引用示例
-├── sty/                        # 仅用于项目自定义的小型宏包
 └── .vscode/
     ├── settings.json           # LaTeX Workshop 配置
     └── latex.code-snippets     # 常用代码片段

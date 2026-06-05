@@ -117,7 +117,6 @@ XeLaTeX + biblatex + biber + GB/T 7714-2025
 │   ├── appendix.tex
 │   └── examples/
 ├── src/
-├── sty/
 └── .vscode/
 ```
 
@@ -128,7 +127,6 @@ XeLaTeX + biblatex + biber + GB/T 7714-2025
 * 图片放在 `img/`。
 * 代码示例放在 `src/`。
 * 参考文献放在 `doc/bibfile.bib`。
-* `sty/` 只允许放项目自定义的小型宏包，不允许 vendor 大型第三方包。
 
 ## `\input{}` 与 `\include{}` 使用规则
 
