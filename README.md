@@ -77,14 +77,57 @@ kpsewhich pgfplots.sty
 | latexmk-xelatex | 推荐默认方式，自动处理 XeLaTeX 和 biber |
 | xelatex -> biber -> xelatex*2 | 手动全量编译方式，适合排查参考文献问题 |
 
+## 常用模板命令
+
+| 命令/环境 | 用途 |
+|---|---|
+| `\cqtfrontmatter` | 开始前置部分，使用 Roman 页码 |
+| `\cqtmainmatter` | 开始正文部分，页码从 1 重新开始 |
+| `\cqtpdfcover{...}` | 插入外部 PDF 封面 |
+| `cqtabstract` | 中文摘要环境 |
+| `cqtenabstract` | 英文摘要环境 |
+
+模板支持以下正式结构：
+- PDF 封面
+- 中文摘要（Roman 页码）
+- 英文摘要（Roman 页码）
+- 目录（Roman 页码）
+- 正文（Arabic 页码）
+- 附录
+- 参考文献
+
+## 单栏与双栏
+
+默认单栏。若需要期刊/会议风格双栏，可在文档类选项中加入 `twocolumn`：
+
+```tex
+\documentclass[UTF8,AutoFakeBold,twoside,twocolumn,fontset=fandol]{CarlosTexArt}
+```
+
+双栏文档中的通栏图表可以使用 `figure*` 和 `table*`。
+
+## PDF 封面
+
+- 用户可以用 Word/docx 填写学校或课程封面
+- 导出为 PDF
+- 放到 `cover/cover.pdf`
+- 在 `main.tex` 中使用：
+
+  ```tex
+  \cqtpdfcover{cover/cover.pdf}
+  ```
+
 ## 目录结构
 
 ```text
 ├── AGENTS.md                   # LLM agent 修改纪律
 ├── CarlosTexArt.cls            # 模板类文件（一般无需修改）
 ├── main.tex                    # 主文件（改标题、作者、加载 biblatex）
+├── cover/                      # 外部 PDF 封面目录
+│   └── .gitkeep
 ├── page/
-│   ├── abstract.tex            # 摘要
+│   ├── abstract_zh.tex         # 中文摘要
+│   ├── abstract_en.tex         # 英文摘要
 │   ├── content.tex             # 正文入口，引入 examples
 │   ├── appendix.tex            # 附录
 │   └── examples/
