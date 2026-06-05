@@ -151,7 +151,9 @@ kpsewhich pgfplots.sty
 
 - **标题/作者**：改 `main.tex` 中的 `\title{}` 和 `\author{}`
 - **参考文献**：在 `doc/bibfile.bib` 中添加条目
-- **添加章节**：在 `page/` 下新建 `.tex` 文件，并在 `main.tex` 中引入。小节、示例和局部片段推荐使用 `\input{}`；较大的章节可以使用 `\include{}`，它会自动分页，并支持 `\includeonly{}` 局部编译。
+- **添加章节**：在 `page/` 下新建 `.tex` 文件，并在 `main.tex` 中引入。
+  顶层文档单元（摘要、正文章节、附录）推荐使用 `\include{}`，它会分页并生成独立 `.aux` 文件，方便 `\includeonly{}` 局部编译。
+  局部片段和示例推荐使用 `\input{}`，它是原地插入，适合小片段。
 - **图片**：放在 `img/` 目录下
 - **代码**：放在 `src/` 目录下
 - **工程示例**：在 `page/examples/` 中参考
