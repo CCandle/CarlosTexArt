@@ -106,7 +106,7 @@
         "**/*.xdv": true
     },
     "latex-workshop.message.error.show": true,
-    "latex-workshop.message.warning.show": false,
+    "latex-workshop.message.warning.show": true,
     "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
     "editor.formatOnSave": false
 }
