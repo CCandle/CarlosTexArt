@@ -1,47 +1,67 @@
 # 科技论文 LaTeX 模板
 
-适用于 **Windows / macOS / Linux + VS Code + LaTeX Workshop + TeX Live** 环境的通用科技论文模板。
+适用于 **VS Code + LaTeX Workshop + XeLaTeX + biblatex/biber + GB/T 7714-2025** 的通用中文科技/工程报告模板。
 
 ## 前置依赖
 
-- [TeX Live](https://tug.org/texlive/)（推荐 2021 以上）
-- [VS Code](https://code.visualstudio.com/)
-- [LaTeX Workshop 插件](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
+- TeX Live 2026 / MacTeX 2026，或较新的 TeX Live 发行版
+- VS Code
+- LaTeX Workshop
+- latexmk
+- biber
+
+模板默认使用 `fontset=fandol`，依赖 TeX Live 自带的 Fandol 中文字体，避免绑定 Windows 或 macOS 专有字体。
 
 ## 快速上手
 
 1. 用 VS Code 打开本文件夹
-2. 打开 `main.tex`，按下 `Ctrl+Alt+B` 编译
-3. 按下 `Ctrl+Alt+V` 预览 PDF
+2. 打开 `main.tex`
+3. 使用 LaTeX Workshop 的 `latexmk-xelatex` recipe 编译
+4. 输出文件在 `build/main.pdf`
 
-## Recipe 选择
+默认编译输出位于 `build/main.pdf`。模板分发包不应包含根目录 `main.pdf` 或 `build/` 等编译产物。
 
-VS Code 左下角「BUILD」下拉菜单选择：
+## 环境自检
+
+```bash
+xelatex --version
+latexmk -v
+biber --version
+kpsewhich ctexart.cls
+kpsewhich biblatex-gb7714-2015.sty
+kpsewhich circuitikz.sty
+kpsewhich siunitx.sty
+kpsewhich pgfplots.sty
+```
+
+## Recipe 说明
 
 | Recipe | 用途 |
 |--------|------|
-| **xelatex**（默认） | 日常写内容，不改参考文献时用，单次编译很快 |
-| **xebibitex** | 新增或修改了 `doc/bibfile.bib` 中的文献后，全量编译 |
-
-本模板默认使用 `fontset=fandol`，依赖 TeX Live 自带的 Fandol 中文字体，避免绑定 Windows 或 macOS 专有字体。如需使用宋体、Times New Roman 等本机字体，可在个人论文中自行覆盖字体设置。
+| latexmk-xelatex | 推荐默认方式，自动处理 XeLaTeX 和 biber |
+| xelatex -> biber -> xelatex*2 | 手动全量编译方式，适合排查参考文献问题 |
 
 ## 目录结构
 
 ```
 ├── CarlosTexArt.cls            # 模板类文件（一般无需修改）
-├── main.tex                    # 主文件（改标题、作者在这里）
+├── main.tex                    # 主文件（改标题、作者、加载 biblatex）
 ├── page/
 │   ├── abstract.tex            # 摘要
-│   ├── content.tex             # 正文（按章节拆文件）
-│   └── appendix.tex            # 附录
+│   ├── content.tex             # 正文入口，引入 examples
+│   ├── appendix.tex            # 附录
+│   └── examples/
+│       ├── math.tex            # 公式示例
+│       ├── figure_table.tex    # 图表与单位示例
+│       ├── code.tex            # 代码清单示例
+│       ├── tikz.tex            # TikZ 框图示例
+│       └── circuitikz.tex      # CircuitikZ 电路图示例
 ├── doc/
 │   └── bibfile.bib             # 参考文献数据库
 ├── img/                        # 图片文件夹
-├── src/                        # 源码文件夹
-├── sty/
-│   └── matlab.sty              # MATLAB 代码高亮定义
-├── gbt7714.sty                 # GB/T 7714 参考文献样式包
-├── gbt7714-numerical.bst       # GB/T 7714 数字引用样式
+├── src/
+│   └── pid_controller.py       # 代码引用示例
+├── sty/                        # 备用目录
 └── .vscode/
     ├── settings.json           # LaTeX Workshop 配置
     └── latex.code-snippets     # 常用代码片段
@@ -50,9 +70,12 @@ VS Code 左下角「BUILD」下拉菜单选择：
 ## 自定义
 
 - **标题/作者**：改 `main.tex` 中的 `\title{}` 和 `\author{}`
+- **参考文献**：在 `doc/bibfile.bib` 中添加条目
 - **添加章节**：在 `page/` 下新建 `.tex` 文件，在 `main.tex` 中用 `\include{}` 引入
-- **添加参考文献**：在 `doc/bibfile.bib` 中添加条目，编译时选 `xebibitex`
-- **子图排版**：`main.tex` 中取消 `\usepackage{subcaption}` 的注释即可
+- **图片**：放在 `img/` 目录下
+- **代码**：放在 `src/` 目录下
+- **工程示例**：在 `page/examples/` 中参考
+- **GB/T 7714 版本**：如果学校/期刊仍要求 GB/T 7714-2015，可以把 `main.tex` 里的 `style=gb7714-2025` 改成 `style=gb7714-2015`
 
 ## License
 

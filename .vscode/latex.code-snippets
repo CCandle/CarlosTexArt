@@ -1,5 +1,5 @@
 {
-	"Table": {
+	"Table (booktabs)": {
 		"scope": "latex",
 		"prefix": "\\tab",
 		"body": [
@@ -7,10 +7,11 @@
 			"\t\\centering",
 			"\t\\caption{$1}",
 			"\t\\begin{tabular}{$2}",
-			"\t\t\\hline",
+			"\t\t\\toprule",
 			"\t\t$4",
-			"\t\t\\hline",
-			"\t\t\\hline",
+			"\t\t\\midrule",
+			"\t\t$5",
+			"\t\t\\bottomrule",
 			"\t\\end{tabular}",
 			"\t\\label{tab:$3}",
 			"\\end{table}"
@@ -20,7 +21,7 @@
 		"scope": "latex",
 		"prefix": "\\fig",
 		"body": [
-			"\\begin{figure}[H]",
+			"\\begin{figure}[htbp]",
 			"\t\\centering",
 			"\t\\includegraphics[width=0.5\\textwidth]{$2}",
 			"\t\\caption{$1}",
@@ -36,6 +37,42 @@
 			"\t$3",
 			"\t\\label{eq:$1}",
 			"\\end{equation}"
+		]
+	},
+	"Code Listing": {
+		"scope": "latex",
+		"prefix": "\\lstinput",
+		"body": [
+			"\\lstinputlisting[",
+			"\tstyle=$2,",
+			"\tcaption={$1},",
+			"\tlabel={lst:$3}",
+			"]{$4}"
+		]
+	},
+	"CircuitikZ": {
+		"scope": "latex",
+		"prefix": "\\ckt",
+		"body": [
+			"\\begin{circuitikz}[american]",
+			"\t\\draw",
+			"\t\t$0;",
+			"\\end{circuitikz}"
+		]
+	},
+	"TikZ Block Diagram": {
+		"scope": "latex",
+		"prefix": "\\tikzblock",
+		"body": [
+			"\\begin{tikzpicture}[",
+			"\tnode distance=1.5cm,",
+			"\tblock/.style={rectangle, draw, minimum width=2cm, minimum height=0.8cm},",
+			"\tarrow/.style={{-Latex[length=2mm]}, thick}",
+			"]",
+			"\t\\node[block] (n1) {$1};",
+			"\t\\node[block, right=of n1] (n2) {$2};",
+			"\t\\draw[arrow] (n1) -- (n2);",
+			"\\end{tikzpicture}"
 		]
 	}
 }

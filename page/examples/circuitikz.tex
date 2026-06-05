@@ -1,0 +1,18 @@
+\subsection{CircuitikZ 电路图}
+\label{sec:circuitikz}
+
+\autoref{fig:rlc-circuit} 是一个简单的 RLC 串联电路。
+
+\begin{figure}[htbp]
+    \centering
+    \begin{circuitikz}[american]
+        \draw
+        (0,0) to[V, l=$u_\mathrm{in}$] (0,3)
+              to[R, l=$R$] (3,3)
+              to[L, l=$L$] (6,3)
+              to[C, l=$C$] (6,0)
+              -- (0,0);
+    \end{circuitikz}
+    \caption{RLC 串联电路}
+    \label{fig:rlc-circuit}
+\end{figure}

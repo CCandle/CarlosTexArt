@@ -7,73 +7,118 @@
 \ProcessOptions\relax
 \LoadClass{ctexart}
 
+% Page geometry
 \RequirePackage{geometry}
-\RequirePackage{amsmath}
-\RequirePackage{float}
-\RequirePackage{esint}
-\RequirePackage{graphicx}
-\RequirePackage{cases}
-\RequirePackage{caption}
+\geometry{left=3.0cm, right=2.50cm, top=2.80cm, bottom=2.50cm}
+
+% Fonts and encoding
 \RequirePackage{fontspec}
-\RequirePackage[hidelinks]{hyperref}
-\RequirePackage{hologo}
-\RequirePackage{gbt7714}
-\RequirePackage{appendix}
-\RequirePackage{enumerate}
-\RequirePackage{listings}
-\RequirePackage{xcolor}
-\RequirePackage{pdfpages}
 \RequirePackage{lmodern}
+\RequirePackage{hologo}
+
+% Math
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{mathtools}
+\RequirePackage{bm}
+\RequirePackage{esint}
+\RequirePackage{cases}
+
+% Figures and tables
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{longtable}
+\RequirePackage{array}
+\RequirePackage{makecell}
+\RequirePackage{multirow}
+
+% Units
+\RequirePackage{siunitx}
+\sisetup{
+    detect-all,
+    separate-uncertainty = true,
+    per-mode = symbol
+}
+
+% Lists
+\RequirePackage{enumitem}
+\setlist[itemize]{itemsep=0.2em, topsep=0.3em}
+\setlist[enumerate]{itemsep=0.2em, topsep=0.3em}
+
+% Graphics
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc, shapes.geometric}
+\RequirePackage[american]{circuitikz}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Code and colors
+\RequirePackage{xcolor}
+\RequirePackage{listings}
+
+% PDF and bookmarks (loaded late)
+\RequirePackage{xurl}
+\RequirePackage[
+    hidelinks,
+    unicode,
+    bookmarksnumbered=true
+]{hyperref}
+\RequirePackage{bookmark}
+\urlstyle{same}
+
+% Other utilities
+\RequirePackage{pdfpages}
 \RequirePackage{xpatch}
 \RequirePackage{xifthen}
-\RequirePackage{blindtext}
 \RequirePackage{xargs}
 \RequirePackage{changepage}
-\RequirePackage{multirow}
-\RequirePackage{subcaption}
 
 % lstlisting settings
-\renewcommand{\lstlistingname}{源码}
-\lstset{
-    basicstyle          =   \sffamily,
-    keywordstyle        =   \bfseries,
-    commentstyle        =   \rmfamily\itshape,
-    stringstyle         =   \ttfamily,
-    showspaces          =   false,
-    showstringspaces    =   false,
-    numbers             =   left,
-    numberstyle         =   \zihao{-5}\ttfamily,
-    captionpos          =   t,
-    frame               =   single,
-    frameround          =   tttt,
-    framexleftmargin    =   2em,
-    framexrightmargin   =   2.5em,
-    flexiblecolumns     =   false,
+\renewcommand{\lstlistingname}{代码}
+\renewcommand{\lstlistlistingname}{代码清单}
+\def\lstlistingautorefname{代码}
+\lstdefinestyle{CarlosCodeBase}{
+    basicstyle          = \zihao{-5}\ttfamily,
+    numberstyle         = \zihao{-5}\ttfamily,
+    keywordstyle        = \color[RGB]{122, 62, 157},
+    stringstyle         = \color[RGB]{68, 140, 39},
+    commentstyle        = \color{gray}\ttfamily,
+    showspaces          = false,
+    showstringspaces    = false,
+    numbers             = left,
+    captionpos          = t,
+    frame               = single,
+    frameround          = tttt,
+    breaklines          = true,
+    columns             = fixed,
+    basewidth           = 0.6em,
+    tabsize             = 4
 }
 \lstdefinestyle{Python}{
-    language        =   Python,
-    basicstyle      =   \zihao{-5}\ttfamily,
-    numberstyle     =   \zihao{-5}\ttfamily,
-    keywordstyle    =   \color[RGB]{122, 62, 157},
-    keywordstyle    =   [2] \color[RGB]{170, 55, 49},
-    stringstyle     =   \color[RGB]{68, 140, 39},
-    commentstyle    =   \color{gray} \ttfamily,
-    breaklines      =   true,
-    columns         =   fixed,
-    basewidth       =   0.6em,
+    style               = CarlosCodeBase,
+    language            = Python
 }
-\lstdefinestyle{Matlab}{
-    language        =   Matlab,
-    basicstyle      =   \zihao{-5}\ttfamily,
-    numberstyle     =   \zihao{-5}\ttfamily,
-    keywordstyle    =   \color[RGB]{122, 62, 157},
-    keywordstyle    =   [2] \color[RGB]{170, 55, 49},
-    stringstyle     =   \color[RGB]{68, 140, 39},
-    commentstyle    =   \color{gray} \ttfamily,
-    breaklines      =   true,
-    columns         =   fixed,
-    basewidth       =   0.6em,
+\lstdefinestyle{C}{
+    style               = CarlosCodeBase,
+    language            = C
 }
+\lstdefinestyle{Cpp}{
+    style               = CarlosCodeBase,
+    language            = C++
+}
+
+\makeatletter
+\providecommand*{\toclevel@lstlisting}{1}
+\AtBeginDocument{%
+    \@ifundefined{c@lstlisting}{}{%
+        \numberwithin{lstlisting}{section}%
+    }%
+}
+\makeatother
 
 % 字体、段落格式设定
 \ExplSyntaxOn
@@ -94,7 +139,6 @@
     subsection      = {format = \zihao{4} \heiti \bf},
     subsubsection   = {format = \zihao{4} \songti \bf},
 }
-\geometry{left=3.0cm, right=2.50cm, top=2.80cm, bottom=2.50cm}
 
 % 自动引用名称（中文）
 \def\equationautorefname{式}
@@ -114,6 +158,7 @@
 \numberwithin{equation}{section}
 \numberwithin{table}{section}
 \numberwithin{figure}{section}
+
 
 % 调整页眉页脚样式
 \RequirePackage{fancyhdr}

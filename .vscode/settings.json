@@ -1,8 +1,19 @@
 {
-    // Latex workshop 配置
-    // 日常写作：使用 xelatex（单次编译，快速预览）
-    // 更新参考文献后：使用 xebibitex（xe -> bib -> xe -> xe 全量编译）
+    "latex-workshop.latex.outDir": "%DIR%/build",
+    "latex-workshop.latex.recipe.default": "first",
     "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk-xelatex",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-xelatex",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ]
+        },
         {
             "name": "xelatex",
             "command": "xelatex",
@@ -10,29 +21,32 @@
                 "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",
+                "-output-directory=%OUTDIR%",
                 "%DOC%"
             ]
         },
         {
-            "name": "bibtex",
-            "command": "bibtex",
+            "name": "biber",
+            "command": "biber",
             "args": [
-                "%DOCFILE%.aux"
+                "--input-directory=%OUTDIR%",
+                "--output-directory=%OUTDIR%",
+                "%DOCFILE%"
             ]
         }
     ],
     "latex-workshop.latex.recipes": [
         {
-            "name": "xelatex",
+            "name": "latexmk-xelatex",
             "tools": [
-                "xelatex"
+                "latexmk-xelatex"
             ]
         },
         {
-            "name": "xebibitex",
+            "name": "xelatex -> biber -> xelatex*2",
             "tools": [
                 "xelatex",
-                "bibtex",
+                "biber",
                 "xelatex",
                 "xelatex"
             ]
@@ -58,7 +72,9 @@
         "**/*.ist",
         "**/*.fls",
         "**/*.log",
-        "**/*.fdb_latexmk"
+        "**/*.fdb_latexmk",
+        "**/*.bcf",
+        "**/*.run.xml"
     ],
     "files.exclude": {
         "**/.svn": true,
@@ -84,9 +100,12 @@
         "**/*.fls": true,
         "**/*.log": true,
         "**/*.fdb_latexmk": true,
-        "**/*.gz": true
+        "**/*.gz": true,
+        "**/*.bcf": true,
+        "**/*.run.xml": true,
+        "**/*.xdv": true
     },
-    "latex-workshop.message.error.show": false,
+    "latex-workshop.message.error.show": true,
     "latex-workshop.message.warning.show": false,
     "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
     "editor.formatOnSave": false

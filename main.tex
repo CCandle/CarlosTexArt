@@ -4,27 +4,35 @@
 \title{科技论文模板}
 \author{Carlos QU\\ccandle@foxmail.com}
 
-% 如需子图排版，取消下行注释
-% \usepackage{subcaption}
+\usepackage[
+    backend=biber,
+    style=gb7714-2025,
+    sorting=none,
+    gbnamefmt=uppercase,
+    gbpub=false
+]{biblatex}
+
+\addbibresource{doc/bibfile.bib}
 
 \begin{document}
 
 %% 编译说明：
-%%  默认 recipe "xelatex"：适合只改内容不改参考文献的情况
-%%  修改了参考文献后，请切换 recipe "xebibitex" 全量编译
-%%  VS Code 中：Ctrl+Alt+B 编译，Ctrl+Alt+V 预览 PDF
-\bibliographystyle{gbt7714-numerical}
+%%  推荐 recipe：latexmk-xelatex，自动处理 XeLaTeX 与 biber。
+%%  手动全量编译顺序：xelatex -> biber -> xelatex -> xelatex。
+%%  VS Code 中：Ctrl+Alt+B 编译，Ctrl+Alt+V 预览 PDF。
 \maketitle
 
 \input{page/abstract}
 
+\tableofcontents
+\newpage
+
 % ============  正文从此开始  ============ %
-% 每一章在 ./page 下新建 .tex 文件，用 \include 或 \input 引入
-% \include 会自动分页，\input 则连续排版
-\include{page/content}
+% 每一章在 ./page 下新建 .tex 文件，用 \input 引入
+\input{page/content}
+
+\input{page/appendix}
 
 \newpage
-\bibliography{doc/bibfile}
-
-\include{page/appendix}
+\printbibliography[heading=bibintoc,title={参考文献}]
 \end{document}

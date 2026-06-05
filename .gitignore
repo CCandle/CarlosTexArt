@@ -28,7 +28,12 @@
 *.dvi
 *.ps
 *.pdf
+*.bcf
+*.run.xml
+*.xdv
+build/
 
 # OS files
 .DS_Store
 Thumbs.db
+__MACOSX/

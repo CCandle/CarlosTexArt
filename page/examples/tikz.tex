@@ -1,0 +1,23 @@
+\subsection{TikZ 框图}
+\label{sec:tikz}
+
+\autoref{fig:signal-chain} 展示了一个典型信号采集链路。
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[
+        node distance=1.8cm,
+        block/.style={rectangle, draw, minimum width=2cm, minimum height=0.8cm},
+        arrow/.style={-{Latex[length=2mm]}, thick}
+    ]
+        \node[block] (sensor) {传感器};
+        \node[block, right=of sensor] (adc) {ADC};
+        \node[block, right=of adc] (fpga) {FPGA};
+        \node[block, right=of fpga] (host) {上位机};
+        \draw[arrow] (sensor) -- (adc);
+        \draw[arrow] (adc) -- (fpga);
+        \draw[arrow] (fpga) -- (host);
+    \end{tikzpicture}
+    \caption{信号采集链路框图}
+    \label{fig:signal-chain}
+\end{figure}
