@@ -1,7 +1,7 @@
 # AGENTS.md
 
 本文件是给 OpenCode、Codex、Claude Code 及其他 LLM coding agent 使用的工程纪律文件。  
-本模板是一个轻量中文科技/工程报告 LaTeX 模板，不是论文类模板、学校毕业设计模板或大型出版系统。
+本模板不是完整 thesis class，也不内置学校专用流程；但支持正式论文/报告常见结构，包括 PDF 封面、中英文摘要、前置页码、正文页码重置、附录和参考文献。
 
 任何 agent 修改本项目时，必须严格遵守本文档。不要猜测用户意图，不要扩展任务范围。
 
@@ -26,7 +26,7 @@
 - 默认使用 GB/T 7714-2025 参考文献格式。
 - 提供公式、图表、单位、代码清单、TikZ、CircuitikZ、附录和参考文献的最小可用示例。
 
-本模板不是完整 thesis class，也不内置学校专用流程；但支持正式报告常见结构，包括 PDF 封面、中英文摘要、前置页码、正文页码重置、附录和参考文献。
+本模板不是完整 thesis class，也不内置学校专用流程；但支持正式论文/报告常见结构，包括 PDF 封面、中英文摘要、前置页码、正文页码重置、附录和参考文献。
 
 ## 命名前缀规则
 
@@ -135,7 +135,7 @@ XeLaTeX + biblatex + biber + GB/T 7714-2025
 
 不要机械替换 `\input{}` 与 `\include{}`。二者用途不同。
 
-* `\input{}`：直接插入文件内容，不自动分页，适合摘要、示例、小节、局部片段。
+* `\input{}`：直接插入文件内容，不自动分页，适合示例、小节、局部片段
 * `\include{}`：插入文件前后会分页，并生成独立 `.aux`，适合较大的章/节文件，也方便使用 `\includeonly{}` 做局部编译。
 
 本模板遵循以下约定：
@@ -220,6 +220,7 @@ main.tex
 CarlosTexArt.cls
 README.md
 AGENTS.md
+LICENSE
 doc/bibfile.bib
 img/example.png
 src/pid_controller.py
