@@ -75,4 +75,5 @@ jobs:
             "dist/CarlosTexArt-${VERSION}-starter.zip" \
             --title "CarlosTexArt ${VERSION}" \
             --notes-file release-notes.md \
-            --latest
+            --latest \
+            --repo CCandle/CarlosTexArt
