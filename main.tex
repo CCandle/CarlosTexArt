@@ -20,15 +20,21 @@
 %%  推荐 recipe：latexmk-xelatex，自动处理 XeLaTeX 与 biber。
 %%  手动全量编译顺序：xelatex -> biber -> xelatex -> xelatex。
 %%  VS Code 中：Ctrl+Alt+B 编译，Ctrl+Alt+V 预览 PDF。
+
+% ============  封面  ============ %
 \maketitle
+\thispagestyle{empty}
+
+% ============  前置部分  ============ %
+\carlosfrontmatter
 
 \input{page/abstract}
 
 \tableofcontents
-\newpage
 
 % ============  正文从此开始  ============ %
-% 每一章在 ./page 下新建 .tex 文件，用 \input 引入
+\carlosmainmatter
+
 \input{page/content}
 
 \input{page/appendix}

@@ -168,6 +168,19 @@
 \renewcommand{\headrulewidth}{0mm}
 \renewcommand{\footrulewidth}{0mm}
 
+% Matter control for formal reports
+\newcommand{\carlosfrontmatter}{%
+    \cleardoublepage
+    \pagenumbering{Roman}
+    \setcounter{page}{1}
+}
+
+\newcommand{\carlosmainmatter}{%
+    \cleardoublepage
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+}
+
 % 自定义 \maketitle 样式
 \makeatletter
 \renewcommand*\maketitle{
@@ -177,7 +190,6 @@
         {\zihao{-4} \bfseries \@author \par}
         \vskip 2em
     \end{center}%
-    \setcounter{page}{1}
     \xiaosi
 }
 \makeatother

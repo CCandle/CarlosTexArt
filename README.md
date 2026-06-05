@@ -1,6 +1,36 @@
-# 科技论文 LaTeX 模板
+# CarlosTexArt
 
-适用于 **VS Code + LaTeX Workshop + XeLaTeX + biblatex/biber + GB/T 7714-2025** 的通用中文科技/工程报告模板。
+轻量、现代、工程友好的中文 LaTeX 论文/报告模板。
+
+适用于中文科技论文、课程报告、实验报告、工程文档和项目阶段报告。默认使用 XeLaTeX、biblatex/biber、GB/T 7714-2025，并提供 VS Code + LaTeX Workshop 开箱配置。
+
+## 特性
+
+- 中文友好：基于 `ctexart` 与 XeLaTeX
+- 参考文献：`biblatex` + `biber` + GB/T 7714-2025
+- 工程写作：内置 `siunitx`、`booktabs`、`listings`、TikZ、CircuitikZ 示例
+- VS Code 友好：提供 LaTeX Workshop recipe 与 snippets
+- Agent 友好：提供 `AGENTS.md`，约束 LLM coding agent 的修改边界
+- 轻量可迁移：不 vendor CTAN 包，不绑定系统专有字体
+
+## 适用场景
+
+- 中文课程论文
+- 中文实验报告
+- 工程项目报告
+- 阶段性技术文档
+- 需要 GB/T 7714 参考文献的轻量论文/报告
+
+## 不适用场景
+
+- 已有强制学校模板的毕业论文
+- 需要严格出版社版式的论文
+- beamer 幻灯片
+- 需要复杂封面、原创性声明、学位论文评审表等完整 thesis 流程
+
+## 预览
+
+示例 PDF 建议通过 GitHub Releases 发布，避免将编译产物提交到主分支。
 
 ## 前置依赖
 
@@ -49,7 +79,7 @@ kpsewhich pgfplots.sty
 
 ## 目录结构
 
-```
+```text
 ├── AGENTS.md                   # LLM agent 修改纪律
 ├── CarlosTexArt.cls            # 模板类文件（一般无需修改）
 ├── main.tex                    # 主文件（改标题、作者、加载 biblatex）
@@ -68,7 +98,7 @@ kpsewhich pgfplots.sty
 ├── img/                        # 图片文件夹
 ├── src/
 │   └── pid_controller.py       # 代码引用示例
-├── sty/                        # 仅用于项目自定义的小型宏包，不建议放入 TeX Live/CTAN 已提供的大型 `.sty`、`.bst` 或字体文件
+├── sty/                        # 仅用于项目自定义的小型宏包
 └── .vscode/
     ├── settings.json           # LaTeX Workshop 配置
     └── latex.code-snippets     # 常用代码片段
@@ -86,4 +116,4 @@ kpsewhich pgfplots.sty
 
 ## License
 
-本模板基于 CCandle 个人多年使用的 LaTeX 配置整理而成，供参考使用。
+本项目使用 MIT License 开源。详见 [LICENSE](LICENSE)。
