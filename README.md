@@ -84,8 +84,8 @@ kpsewhich pgfplots.sty
 | `\cqtfrontmatter` | 开始前置部分，使用 Roman 页码 |
 | `\cqtmainmatter` | 开始正文部分，页码从 1 重新开始 |
 | `\cqtpdfcover{...}` | 插入外部 PDF 封面 |
-| `cqtabstract` | 中文摘要环境 |
-| `cqtenabstract` | 英文摘要环境 |
+| `cqtabstract` | 中文摘要环境，支持最多 5 个可选关键词参数，自动使用 `；` 拼接 |
+| `cqtenabstract` | 英文摘要环境，支持最多 5 个可选关键词参数，自动使用 `;` 拼接 |
 
 模板支持以下正式结构：
 - PDF 封面

@@ -204,8 +204,26 @@
 }
 \makeatother
 
-% 中文摘要环境
-\NewDocumentEnvironment{cqtabstract}{O{}}{%
+% 中文摘要环境，支持最多 5 个关键词
+\newenvironmentx{cqtabstract}[5][1,2,3,4,5]
+{
+    \newcommand{\cqtabstractkeywords}{
+        \ifthenelse{\isempty{#1}}{}
+        {
+            {\bfseries 关键词：}
+            \ifthenelse{\isempty{#2}}{#1}
+            {
+                \ifthenelse{\isempty{#3}}{#1；#2}
+                {
+                    \ifthenelse{\isempty{#4}}{#1；#2；#3}
+                    {
+                        \ifthenelse{\isempty{#5}}{#1；#2；#3；#4}
+                        {#1；#2；#3；#4；#5}
+                    }
+                }
+            }
+        }
+    }
     \begin{adjustwidth}{1.5em}{1.5em}
     \begin{center}
         \zihao{3}\heiti\bfseries 摘\hspace{1em}要
@@ -213,19 +231,34 @@
     \vspace{0.5em}
     \zihao{-4}\songti
     \par
-}{%
+}
+{
     \par
-    \if\relax\detokenize{#1}\relax
-    \else
-        \par\vspace{0.5em}
-        {\bfseries 关键词：}#1
-    \fi
+    \cqtabstractkeywords
     \par
     \end{adjustwidth}
 }
 
-% 英文摘要环境
-\NewDocumentEnvironment{cqtenabstract}{O{}}{%
+% 英文摘要环境，支持最多 5 个关键词
+\newenvironmentx{cqtenabstract}[5][1,2,3,4,5]
+{
+    \newcommand{\cqtenabstractkeywords}{
+        \ifthenelse{\isempty{#1}}{}
+        {
+            {\bfseries Keywords: }
+            \ifthenelse{\isempty{#2}}{#1}
+            {
+                \ifthenelse{\isempty{#3}}{#1; #2}
+                {
+                    \ifthenelse{\isempty{#4}}{#1; #2; #3}
+                    {
+                        \ifthenelse{\isempty{#5}}{#1; #2; #3; #4}
+                        {#1; #2; #3; #4; #5}
+                    }
+                }
+            }
+        }
+    }
     \begin{adjustwidth}{1.5em}{1.5em}
     \begin{center}
         \zihao{3}\bfseries Abstract
@@ -233,13 +266,10 @@
     \vspace{0.5em}
     \zihao{-4}
     \par
-}{%
+}
+{
     \par
-    \if\relax\detokenize{#1}\relax
-    \else
-        \par\vspace{0.5em}
-        {\bfseries Keywords: }#1
-    \fi
+    \cqtenabstractkeywords
     \par
     \end{adjustwidth}
 }
