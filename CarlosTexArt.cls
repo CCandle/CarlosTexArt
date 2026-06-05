@@ -70,6 +70,10 @@
 \RequirePackage{bookmark}
 \urlstyle{same}
 
+\pdfstringdefDisableCommands{%
+    \def\\{, }%
+}
+
 \makeatletter
 \AtBeginDocument{%
     \hypersetup{
