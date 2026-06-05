@@ -182,6 +182,15 @@
     \setcounter{page}{1}
 }
 
+% PDF 封面命令
+\newcommand{\cqtpdfcover}[2][]{%
+    \includepdf[
+        pages=1,
+        pagecommand={\thispagestyle{empty}},
+        #1
+    ]{#2}%
+}
+
 % 自定义 \maketitle 样式
 \makeatletter
 \renewcommand*\maketitle{

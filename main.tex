@@ -21,9 +21,13 @@
 %%  手动全量编译顺序：xelatex -> biber -> xelatex -> xelatex。
 %%  VS Code 中：Ctrl+Alt+B 编译，Ctrl+Alt+V 预览 PDF。
 
-% ============  封面  ============ %
+% ============ 封面 ============ %
+% 方式 A：使用模板内置标题页
 \maketitle
 \thispagestyle{empty}
+
+% 方式 B：使用 Word/docx 导出的 PDF 封面
+% \cqtpdfcover{cover/cover.pdf}
 
 % ============  前置部分  ============ %
 \cqtfrontmatter
