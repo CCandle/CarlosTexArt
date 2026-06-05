@@ -1,0 +1,177 @@
+\ProvidesClass{CarlosTexArt}[General LaTeX template for scientific papers by Carlos QU]
+\NeedsTeXFormat{LaTeX2e}
+
+\DeclareOption*{%
+    \PassOptionsToClass{\CurrentOption}{ctexart}
+}
+\ProcessOptions\relax
+\LoadClass{ctexart}
+
+\RequirePackage{geometry}
+\RequirePackage{amsmath}
+\RequirePackage{float}
+\RequirePackage{esint}
+\RequirePackage{graphicx}
+\RequirePackage{cases}
+\RequirePackage{caption}
+\RequirePackage{fontspec}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{hologo}
+\RequirePackage{gbt7714}
+\RequirePackage{appendix}
+\RequirePackage{enumerate}
+\RequirePackage{listings}
+\RequirePackage{xcolor}
+\RequirePackage{pdfpages}
+\RequirePackage{lmodern}
+\RequirePackage{xpatch}
+\RequirePackage{xifthen}
+\RequirePackage{blindtext}
+\RequirePackage{xargs}
+\RequirePackage{changepage}
+\RequirePackage{multirow}
+\RequirePackage{subcaption}
+
+% lstlisting settings
+\renewcommand{\lstlistingname}{源码}
+\lstset{
+    basicstyle          =   \sffamily,
+    keywordstyle        =   \bfseries,
+    commentstyle        =   \rmfamily\itshape,
+    stringstyle         =   \ttfamily,
+    showspaces          =   false,
+    showstringspaces    =   false,
+    numbers             =   left,
+    numberstyle         =   \zihao{-5}\ttfamily,
+    captionpos          =   t,
+    frame               =   single,
+    frameround          =   tttt,
+    framexleftmargin    =   2em,
+    framexrightmargin   =   2.5em,
+    flexiblecolumns     =   false,
+}
+\lstdefinestyle{Python}{
+    language        =   Python,
+    basicstyle      =   \zihao{-5}\ttfamily,
+    numberstyle     =   \zihao{-5}\ttfamily,
+    keywordstyle    =   \color[RGB]{122, 62, 157},
+    keywordstyle    =   [2] \color[RGB]{170, 55, 49},
+    stringstyle     =   \color[RGB]{68, 140, 39},
+    commentstyle    =   \color{gray} \ttfamily,
+    breaklines      =   true,
+    columns         =   fixed,
+    basewidth       =   0.6em,
+}
+\lstdefinestyle{Matlab}{
+    language        =   Matlab,
+    basicstyle      =   \zihao{-5}\ttfamily,
+    numberstyle     =   \zihao{-5}\ttfamily,
+    keywordstyle    =   \color[RGB]{122, 62, 157},
+    keywordstyle    =   [2] \color[RGB]{170, 55, 49},
+    stringstyle     =   \color[RGB]{68, 140, 39},
+    commentstyle    =   \color{gray} \ttfamily,
+    breaklines      =   true,
+    columns         =   fixed,
+    basewidth       =   0.6em,
+}
+
+% 字体、段落格式设定
+\ExplSyntaxOn
+\xpatchcmd\__xeCJK_check_family:n{\__xeCJK_warning:nxx}{\__xeCJK_info:nxx}{}{}
+\xpatchcmd \fontspec_new_script:nn
+    { \__fontspec_warning:nxx }
+    { \__fontspec_info:nxx }
+    {}{}
+\newfontscript{CJK}{hani}
+\ExplSyntaxOff
+\linespread{1.25}
+\newcommand{\xiaosi}{\zihao{-4}\songti}
+\captionsetup[table]{name = 表, font = small}
+\captionsetup[figure]{name = 图, font = small}
+\ctexset
+{
+    section         = {format = \zihao{-3} \heiti \bf},
+    subsection      = {format = \zihao{4} \heiti \bf},
+    subsubsection   = {format = \zihao{4} \songti \bf},
+}
+\geometry{left=3.0cm, right=2.50cm, top=2.80cm, bottom=2.50cm}
+
+% 自动引用名称（中文）
+\def\equationautorefname{式}
+\def\footnoteautorefname{脚注}
+\def\itemautorefname{问题}
+\def\figureautorefname{图}
+\def\tableautorefname{表}
+\def\appendixautorefname{附录}
+\def\sectionautorefname{章}
+\def\subsectionautorefname{节}
+\def\subsubsectionautorefname{小节}
+\def\paragraphautorefname{段落}
+\def\subparagraphautorefname{子段落}
+\def\theoremautorefname{定理}
+
+% 自动编号设置（带章号）
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+
+% 调整页眉页脚样式
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0mm}
+\renewcommand{\footrulewidth}{0mm}
+
+% 自定义 \maketitle 样式
+\makeatletter
+\renewcommand*\maketitle{
+    \begin{center}
+        {\zihao{3} \heiti \bfseries \@title \par}
+        \vskip 1em
+        {\zihao{-4} \bfseries \@author \par}
+        \vskip 2em
+    \end{center}%
+    \setcounter{page}{1}
+    \xiaosi
+}
+\makeatother
+
+% 自定义摘要环境，支持最多 5 个关键词
+\renewenvironmentx{abstract}[5][1,2,3,4,5]
+{
+    \newcommand{\keywords}{
+        \xiaosi
+        \ifthenelse{\isempty{#1}}{}
+        {
+            {\bf 关键词}
+            \ifthenelse{\isempty{#2}}{#1}
+            {
+                \ifthenelse{\isempty{#3}}{#1；#2}
+                {
+                    \ifthenelse{\isempty{#4}}{#1；#2；#3}
+                    {
+                        \ifthenelse{\isempty{#5}}{#1；#2；#3；#4}
+                        {
+                                #1；#2；#3；#4；#5
+                        }
+                    }
+                }
+            }
+        }
+    }
+    \begin{adjustwidth}{1.5em}{1.5em}
+    \begin{center}
+        \zihao{3} \heiti \bf 摘 \hspace{1em} 要
+    \end{center}
+    \vspace{0.5em}
+    \zihao{-4}\songti
+    \par
+}
+{
+    \par
+    \keywords
+    \par
+    \end{adjustwidth}
+    \clearpage
+}

@@ -1,0 +1,34 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.idx
+*.ind
+*.lof
+*.lot
+*.out
+*.toc
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+*.fls
+*.log
+*.fdb_latexmk
+*.synctex.gz
+*.gz
+*.nav
+*.snm
+*.vrb
+*.lol
+*.brf
+*.dvi
+*.ps
+*.pdf
+
+# OS files
+.DS_Store
+Thumbs.db
