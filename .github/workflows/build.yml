@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -11,7 +14,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: texlive/texlive:latest
+    container: texlive/texlive:2024
 
     steps:
       - uses: actions/checkout@v4
@@ -23,39 +26,7 @@ jobs:
         run: python tools/make_starter_package.py --version dev --output dist/CarlosTexArt-dev-starter.zip
 
       - name: Validate starter package
-        run: |
-          set -ex
-          python -m zipfile -l dist/CarlosTexArt-dev-starter.zip | head -80
-          # 检查禁止内容
-          python -c "
-import zipfile
-with zipfile.ZipFile('dist/CarlosTexArt-dev-starter.zip') as zf:
-    names = zf.namelist()
-bad = [n for n in names if any(p in n for p in ['.git/', '.github/', '.gitignore', '.gitattributes', '.gitkeep', 'CONTRIBUTING.md', 'assets/', 'docs/', 'doc/', 'build/', 'dist/', 'page/examples/', 'img/example.png', 'src/pid_controller.py'])]
-if bad:
-    raise SystemExit(f'Bad entries: {bad}')
-required = ['CarlosTexArt.cls', 'main.tex', 'AGENTS.md', 'README.md', 'refs/bibfile.bib', 'page/abstract_zh.tex', 'page/abstract_en.tex', 'page/content.tex', 'page/appendix.tex', 'img/', 'src/', 'cover/']
-missing = [s for s in required if not any(n.endswith(s) for n in names)]
-if missing:
-    raise SystemExit(f'Missing: {missing}')
-# 检查 main.tex 无不良内容
-main_files = [n for n in names if n.endswith('main.tex')]
-if main_files:
-    text = zf.read(main_files[0]).decode('utf-8')
-    for token in ['Carlos QU', 'ccandle@foxmail.com', '\\\\title{科技论文模板}']:
-        if token in text:
-            raise SystemExit(f'Bad token in starter main.tex: {token}')
-print('Starter content validation passed')
-"
-          # 解压并编译
-          rm -rf /tmp/carlostexart-starter-test
-          mkdir -p /tmp/carlostexart-starter-test
-          unzip -q dist/CarlosTexArt-dev-starter.zip -d /tmp/carlostexart-starter-test
-          ls /tmp/carlostexart-starter-test/
-          STARTER_DIR=$(ls /tmp/carlostexart-starter-test/)
-          cd "/tmp/carlostexart-starter-test/${STARTER_DIR}"
-          latexmk -xelatex -interaction=nonstopmode -file-line-error -outdir=build main.tex
-          test -f build/main.pdf
+        run: python tools/validate_starter.py dist/CarlosTexArt-dev-starter.zip --compile
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4

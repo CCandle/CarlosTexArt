@@ -7,7 +7,7 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -15,7 +15,7 @@ permissions:
 jobs:
   build-assets:
     runs-on: ubuntu-latest
-    container: texlive/texlive:latest
+    container: texlive/texlive:2024
 
     steps:
       - uses: actions/checkout@v4
@@ -26,41 +26,18 @@ jobs:
       - name: Prepare release assets
         run: |
           VERSION="${GITHUB_REF_NAME}"
+          NOTES_FILE=".github/release-notes/${VERSION}.md"
+
+          if [ ! -f "${NOTES_FILE}" ]; then
+            echo "Missing release notes: ${NOTES_FILE}"
+            exit 1
+          fi
+
           mkdir -p dist
           cp build/main.pdf "dist/CarlosTexArt-${VERSION}-example.pdf"
           python tools/make_starter_package.py --version "${VERSION}" --output "dist/CarlosTexArt-${VERSION}-starter.zip"
-
-      - name: Validate starter package
-        run: |
-          set -ex
-          VERSION="${GITHUB_REF_NAME}"
-          python -m zipfile -l "dist/CarlosTexArt-${VERSION}-starter.zip" | head -80
-          python -c "
-import zipfile
-with zipfile.ZipFile('dist/CarlosTexArt-${VERSION}-starter.zip') as zf:
-    names = zf.namelist()
-bad = [n for n in names if any(p in n for p in ['.git/', '.github/', '.gitignore', '.gitattributes', '.gitkeep', 'CONTRIBUTING.md', 'assets/', 'docs/', 'doc/', 'build/', 'dist/', 'page/examples/', 'img/example.png', 'src/pid_controller.py'])]
-if bad:
-    raise SystemExit(f'Bad entries: {bad}')
-required = ['CarlosTexArt.cls', 'main.tex', 'AGENTS.md', 'README.md', 'refs/bibfile.bib', 'page/abstract_zh.tex', 'page/abstract_en.tex', 'page/content.tex', 'page/appendix.tex', 'img/', 'src/', 'cover/']
-missing = [s for s in required if not any(n.endswith(s) for n in names)]
-if missing:
-    raise SystemExit(f'Missing: {missing}')
-main_files = [n for n in names if n.endswith('main.tex')]
-if main_files:
-    text = zf.read(main_files[0]).decode('utf-8')
-    for token in ['Carlos QU', 'ccandle@foxmail.com', '\\\\title{科技论文模板}']:
-        if token in text:
-            raise SystemExit(f'Bad token in starter main.tex: {token}')
-print('Starter content validation passed')
-"
-          rm -rf /tmp/carlostexart-starter-test
-          mkdir -p /tmp/carlostexart-starter-test
-          unzip -q "dist/CarlosTexArt-${VERSION}-starter.zip" -d /tmp/carlostexart-starter-test
-          STARTER_DIR=\$(ls /tmp/carlostexart-starter-test/)
-          cd "/tmp/carlostexart-starter-test/\${STARTER_DIR}"
-          latexmk -xelatex -interaction=nonstopmode -file-line-error -outdir=build main.tex
-          test -f build/main.pdf
+          python tools/validate_starter.py "dist/CarlosTexArt-${VERSION}-starter.zip" --compile
+          cp "${NOTES_FILE}" dist/release-notes.md
 
       - name: Upload release assets
         uses: actions/upload-artifact@v4
@@ -69,6 +46,7 @@ print('Starter content validation passed')
           path: |
             dist/CarlosTexArt-${{ github.ref_name }}-example.pdf
             dist/CarlosTexArt-${{ github.ref_name }}-starter.zip
+            dist/release-notes.md
 
   release:
     needs: build-assets
@@ -90,6 +68,6 @@ print('Starter content validation passed')
             "dist/CarlosTexArt-${VERSION}-example.pdf" \
             "dist/CarlosTexArt-${VERSION}-starter.zip" \
             --title "CarlosTexArt ${VERSION}" \
-            --generate-notes \
+            --notes-file dist/release-notes.md \
             --latest \
             --repo CCandle/CarlosTexArt
