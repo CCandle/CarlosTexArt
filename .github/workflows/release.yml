@@ -15,7 +15,7 @@ permissions:
 jobs:
   build-assets:
     runs-on: ubuntu-latest
-    container: texlive/texlive:2024
+    container: texlive/texlive:latest
 
     steps:
       - uses: actions/checkout@v4
