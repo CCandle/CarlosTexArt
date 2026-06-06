@@ -34,7 +34,7 @@
 - 参考文献：`biblatex` + `biber` + GB/T 7714-2025
 - 工程写作：内置 `siunitx`、`booktabs`、`listings`、TikZ、CircuitikZ 示例
 - VS Code 友好：提供 LaTeX Workshop recipe 与 snippets
-- Agent 友好：提供 `AGENTS.md`，约束 LLM coding agent 的修改边界
+- Agent 友好：提供 `AGENTS.md`，供 AI agent 辅助写作时参考
 - 轻量可迁移：不 vendor CTAN 包，不绑定系统专有字体
 
 ## 适用场景
@@ -56,7 +56,7 @@
 
 示例 PDF 可在 [Releases](../../releases) 中下载。
 
-最新版本的 example PDF 和 starter zip 可在 [Releases](../../releases) 中下载。普通 push / pull request 的 GitHub Actions artifact 也会产出 example PDF 和 starter zip，便于发布前检查。
+最新版本的 example PDF 和 starter zip 可在 [Releases](../../releases) 中下载。starter zip 是干净开工包，解压后可直接用 `latexmk` 编译，无需额外配置。普通 push / pull request 的 GitHub Actions artifact 也会产出 example PDF 和 starter zip，便于发布前检查。
 
 ## 前置依赖
 
@@ -94,11 +94,13 @@ xelatex -output-directory=build main.tex
 xelatex -output-directory=build main.tex
 ```
 
-## Agent 使用说明
+## Agent 辅助写作
 
-如果使用 OpenCode、Codex、Claude Code 等 agent 修改本模板，请先让 agent 阅读 `AGENTS.md`。
+本仓库和 starter zip 都包含 `AGENTS.md`，供 AI agent（如 OpenCode、Codex、Claude Code）辅助写作时参考。使用时请让 agent 先阅读该文件。
 
-`README.md` 面向人类使用者，说明环境、目录结构和日常使用方式；`AGENTS.md` 面向 LLM agent，定义修改边界、禁止事项、验证要求和停止条件。
+`README.md` 面向人类使用者，说明环境、目录结构和日常使用方式；`AGENTS.md` 面向 AI agent，规定模板使用规则、已验证 LaTeX 写法和写作语言规范。
+
+开发者贡献规则见 `CONTRIBUTING.md`。
 
 ## 环境自检
 
@@ -163,7 +165,7 @@ kpsewhich pgfplots.sty
 ## 目录结构
 
 ```text
-├── AGENTS.md                   # LLM agent 修改纪律
+├── AGENTS.md                   # AI agent 辅助写作指南
 ├── CarlosTexArt.cls            # 模板类文件（一般无需修改）
 ├── main.tex                    # 主文件（改标题、作者、加载 biblatex）
 ├── assets/
