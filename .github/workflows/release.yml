@@ -5,6 +5,10 @@ on:
     tags:
       - "v*"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -22,9 +26,18 @@ jobs:
       - name: Prepare release assets
         run: |
           VERSION="${GITHUB_REF_NAME}"
+          NOTES_FILE=".github/release-notes/${VERSION}.md"
+
+          if [ ! -f "${NOTES_FILE}" ]; then
+            echo "Missing release notes: ${NOTES_FILE}"
+            exit 1
+          fi
+
           mkdir -p dist
           cp build/main.pdf "dist/CarlosTexArt-${VERSION}-example.pdf"
           python tools/make_starter_package.py --version "${VERSION}" --output "dist/CarlosTexArt-${VERSION}-starter.zip"
+          python tools/validate_starter.py "dist/CarlosTexArt-${VERSION}-starter.zip" --compile
+          cp "${NOTES_FILE}" dist/release-notes.md
 
       - name: Upload release assets
         uses: actions/upload-artifact@v4
@@ -33,6 +46,7 @@ jobs:
           path: |
             dist/CarlosTexArt-${{ github.ref_name }}-example.pdf
             dist/CarlosTexArt-${{ github.ref_name }}-starter.zip
+            dist/release-notes.md
 
   release:
     needs: build-assets
@@ -50,30 +64,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           VERSION="${GITHUB_REF_NAME}"
-          cat > release-notes.md <<EOF
-          # CarlosTexArt ${VERSION}
-
-          CarlosTexArt ${VERSION} release.
-
-          ## Highlights
-
-          - Reorganize repository assets and reference database directories.
-          - Move README preview image to \`assets/\`.
-          - Move bibliography database to \`refs/bibfile.bib\`.
-          - Add class version metadata.
-          - Add clean starter package generation.
-          - Provide release assets for both example PDF and starter zip.
-
-          ## Assets
-
-          - \`CarlosTexArt-${VERSION}-example.pdf\`: example PDF generated from the full template.
-          - \`CarlosTexArt-${VERSION}-starter.zip\`: clean starter package for new documents.
-          EOF
-
           gh release create "${VERSION}" \
             "dist/CarlosTexArt-${VERSION}-example.pdf" \
             "dist/CarlosTexArt-${VERSION}-starter.zip" \
             --title "CarlosTexArt ${VERSION}" \
-            --notes-file release-notes.md \
+            --notes-file dist/release-notes.md \
             --latest \
             --repo CCandle/CarlosTexArt

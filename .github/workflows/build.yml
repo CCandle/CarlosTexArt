@@ -4,6 +4,13 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,6 +24,9 @@ jobs:
 
       - name: Build starter package
         run: python tools/make_starter_package.py --version dev --output dist/CarlosTexArt-dev-starter.zip
+
+      - name: Validate starter package
+        run: python tools/validate_starter.py dist/CarlosTexArt-dev-starter.zip --compile
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
