@@ -32,7 +32,7 @@ STARTER_README = """# CarlosTexArt Starter
 ## 命令行编译
 
 ```bash
-latexmk -xelatex -outdir=build main.tex
+latexmk -xelatex -interaction=nonstopmode -file-line-error -outdir=build main.tex
 ```
 
 ## 文件结构
@@ -72,7 +72,7 @@ cover/
 
 ## 添加图片和代码
 
-图片放入 `img/`，代码文件放入 `src/`。starter 解压后这些空目录已存在。
+图片放入 `img/`，代码文件放入 `src/`。`img/`、`src/`、`cover/` 是空目录，但在 starter zip 中会保留，用户按需放入文件。
 
 ## PDF 封面
 
@@ -80,11 +80,11 @@ cover/
 
 ## AGENTS.md
 
-本文件夹包含 `AGENTS.md`，供 AI agent（如 OpenCode、Codex、Claude Code）辅助写作时参考。使用 agent 前请让其阅读该文件。
+本文件夹包含 `AGENTS.md`，这是给 AI agent 使用的写作规则。使用 agent 前，建议先让 agent 阅读 `AGENTS.md`，再协助修改摘要、正文、图表、公式、代码、参考文献和附录。
 
 ## 空目录
 
-`img/`、`src/`、`cover/` 是空目录，解压后已经存在，用户按需放入文件。
+`img/`、`src/`、`cover/` 解压后已经存在。需要图片、外部代码或 PDF 封面时，把文件放入对应目录。
 """
 
 STARTER_FILES = {
@@ -122,7 +122,7 @@ Write the English abstract here. Summarize the background, method, results, and 
   address   = {北京}
 }
 """,
-    "main.tex": r"""\documentclass{CarlosTexArt}
+    "main.tex": r"""\documentclass[UTF8,AutoFakeBold,twoside,fontset=fandol]{CarlosTexArt}
 
 % biblatex 配置（biber + GB/T 7714-2025）
 \usepackage[
@@ -133,11 +133,13 @@ Write the English abstract here. Summarize the background, method, results, and 
     gbpub=false
 ]{biblatex}
 
+% 参考文献数据库
 \addbibresource{refs/bibfile.bib}
 
 \title{在这里填写标题}
 \author{在这里填写作者}
-\date{\today}
+% 日期可按学校或课程要求填写；不需要时可以删除本行。
+\date{在这里填写日期}
 
 \begin{document}
 
