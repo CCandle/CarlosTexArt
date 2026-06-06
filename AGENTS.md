@@ -24,7 +24,7 @@
 - `refs/bibfile.bib`：参考文献数据库。
 - `img/`：正文图片。
 - `src/`：被论文引用或展示的源码文件。
-- `cover/`：用户可自行创建，用于放置外部 PDF 封面，例如 `cover/cover.pdf`。
+- `cover/`：用于放置外部 PDF 封面，例如 `cover/cover.pdf`。
 - `CarlosTexArt.cls`：模板样式文件，默认不要修改。
 
 ## 推荐修改位置
@@ -40,7 +40,7 @@
 
 ## 优先使用模板已验证写法
 
-除非用户明确要求其他写法，否则优先使用本模板 demo 中已经验证可用的写法。不要自由发挥出复杂、不必要、未经验证的 LaTeX 结构。
+除非用户明确要求其他写法，否则优先使用本模板已经验证可用的写法。不要自由发挥出复杂、不必要、未经验证的 LaTeX 结构。
 
 ### 章节与交叉引用
 
@@ -54,7 +54,7 @@
 需要交叉引用时，优先使用 `\label{}` 与 `\autoref{}`：
 
 ```tex
-如 \autoref{fig:sample} 所示，系统输出随输入变化而变化。
+如 \autoref{fig:your-figure} 所示，系统输出随输入变化而变化。
 ```
 
 不要手动写"图 1""表 2""公式 (3)"这类硬编码编号。
@@ -91,9 +91,9 @@
 ```tex
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]{img/example.png}
+    \includegraphics[width=0.5\textwidth]{img/your-figure.png}
     \caption{示例图片}
-    \label{fig:sample}
+    \label{fig:your-figure}
 \end{figure}
 ```
 
@@ -102,8 +102,8 @@
 * 图片文件放入 `img/`；
 * 使用 `\caption{}` 给出清晰标题；
 * 使用 `\label{}` 方便引用；
-* 正文中使用 `\autoref{fig:sample}` 引用；
-* 不要把 README preview 图当作正文图片复用。
+* 正文中使用 `\autoref{fig:your-figure}` 引用；
+* 添加引用前应确认图片文件已经放入 `img/`。
 
 ### 表格
 
@@ -179,16 +179,16 @@
 ```tex
 \lstinputlisting[
     style=Python,
-    caption={PID 控制器实现},
-    label={lst:pid-controller}
-]{src/pid_controller.py}
+    caption={示例代码},
+    label={lst:your-code}
+]{src/your_code.py}
 ```
 
 要求：
 
 * 代码文件放入 `src/`；
 * 使用 `caption` 和 `label`；
-* 正文中用 `\autoref{lst:pid-controller}` 引用；
+* 正文中用 `\autoref{lst:your-code}` 引用；
 * 不要把大量代码直接粘进正文，除非用户明确要求。
 
 ### TikZ 框图
@@ -369,4 +369,4 @@ latexmk -xelatex -interaction=nonstopmode -file-line-error -outdir=build main.te
 * 删除 `refs/bibfile.bib`；
 * 删除摘要、目录、正文、附录、参考文献主结构；
 * 把临时文件、编译产物或 PDF 提交到版本库；
-* 把 README preview 图当作正文图片复用。
+* 引用不存在的图片、代码或文献文件；添加引用前应先确认文件已放入对应目录。
