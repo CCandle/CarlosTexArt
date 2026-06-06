@@ -40,6 +40,7 @@ latexmk -xelatex -outdir=build main.tex
 ```text
 CarlosTexArt.cls
 main.tex
+AGENTS.md
 refs/bibfile.bib
 page/
 img/
@@ -52,17 +53,38 @@ cover/
 
 正文入口是 `page/content.tex`。摘要在 `page/abstract_zh.tex` 和 `page/abstract_en.tex`，附录在 `page/appendix.tex`。
 
+## 标题与作者
+
+在 `main.tex` 中填写：
+
+```tex
+\\title{你的论文标题}
+\\author{你的姓名}
+```
+
+## 中文与英文摘要
+
+中文摘要位于 `page/abstract_zh.tex`，英文摘要位于 `page/abstract_en.tex`。使用模板提供的摘要环境，关键词作为可选参数传入。
+
 ## 参考文献
 
 参考文献数据库位于 `refs/bibfile.bib`。正文中使用 `\\cite{...}` 引用条目，文末会自动打印参考文献。
+
+## 添加图片和代码
+
+图片放入 `img/`，代码文件放入 `src/`。starter 解压后这些空目录已存在。
 
 ## PDF 封面
 
 如需外部封面，可自行把 Word/docx 导出的 PDF 放到 `cover/cover.pdf`，并在 `main.tex` 中启用 `\\cqtpdfcover{cover/cover.pdf}`。
 
+## AGENTS.md
+
+本文件夹包含 `AGENTS.md`，供 AI agent（如 OpenCode、Codex、Claude Code）辅助写作时参考。使用 agent 前请让其阅读该文件。
+
 ## 空目录
 
-`img/`、`src/`、`cover/` 是空目录，分别用于正文图片、代码文件和外部 PDF 封面。
+`img/`、`src/`、`cover/` 是空目录，解压后已经存在，用户按需放入文件。
 """
 
 STARTER_FILES = {
@@ -100,12 +122,55 @@ Write the English abstract here. Summarize the background, method, results, and 
   address   = {北京}
 }
 """,
+    "main.tex": r"""\documentclass{CarlosTexArt}
+
+% biblatex 配置（biber + GB/T 7714-2025）
+\usepackage[
+    backend=biber,
+    style=gb7714-2025,
+    sorting=none,
+    gbnamefmt=uppercase,
+    gbpub=false
+]{biblatex}
+
+\addbibresource{refs/bibfile.bib}
+
+\title{在这里填写标题}
+\author{在这里填写作者}
+\date{\today}
+
+\begin{document}
+
+% 如果需要使用外部 PDF 封面，请取消下一行注释，并将封面放到 cover/cover.pdf。
+% \cqtpdfcover{cover/cover.pdf}
+
+\maketitle
+
+\cqtfrontmatter
+
+\include{page/abstract_zh}
+\include{page/abstract_en}
+\cleardoublepage
+
+\tableofcontents
+\cleardoublepage
+
+\cqtmainmatter
+
+\include{page/content}
+\include{page/appendix}
+
+\clearpage
+\printbibliography[heading=bibintoc,title={参考文献}]
+
+\end{document}
+""",
     "README.md": STARTER_README,
 }
 
 COPY_FILES = [
     "CarlosTexArt.cls",
-    "main.tex",
+    "AGENTS.md",
     "LICENSE",
     ".vscode/settings.json",
     ".vscode/latex.code-snippets",
@@ -196,7 +261,7 @@ def main() -> None:
 
     print(f"Created {display_output}")
     for entry in entries:
-        if entry.endswith("/") or entry.endswith(("CarlosTexArt.cls", "main.tex", "refs/bibfile.bib", "page/content.tex", "README.md")):
+        if entry.endswith("/") or entry.endswith(("CarlosTexArt.cls", "main.tex", "AGENTS.md", "refs/bibfile.bib", "page/content.tex", "README.md")):
             print(f"  {entry}")
 
 
