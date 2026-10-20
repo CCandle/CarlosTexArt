@@ -230,7 +230,7 @@
 ```tex
 \begin{figure}[htbp]
     \centering
-    \begin{circuitikz}[american]
+    \begin{circuitikz}
         \draw
         (0,0) to[V, l=$u_\mathrm{in}$] (0,3)
               to[R, l=$R$] (3,3)
@@ -247,6 +247,8 @@
 
 * CircuitikZ 图必须放在 `figure` 环境中；
 * 使用 `caption` 和 `label`；
+* 模板默认采用矩形电阻（europeanresistors）与线圈形电感（cuteinductors）的混合风格；电容保持平行极板画法；
+* 直接使用 `\\begin{circuitikz}`，不要再添加 `[american]` 或 `[european]`，否则会覆盖模板的默认混合风格；只有在具体图确实需要其他符号风格时才局部覆盖；
 * 节点和元件标注应简洁；
 * 不要在没有用户确认的情况下画复杂电路。
 
