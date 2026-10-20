@@ -52,7 +52,9 @@
 % Graphics
 \RequirePackage{tikz}
 \usetikzlibrary{arrows.meta, positioning, calc, shapes.geometric}
-\RequirePackage[american]{circuitikz}
+% Use rectangular resistors and coil-shaped inductors, common in Chinese circuit textbooks.
+% Do not use the global `european` option: it also changes inductors to rectangular blocks.
+\RequirePackage[europeanresistors,cuteinductors]{circuitikz}
 \RequirePackage{pgfplots}
 \pgfplotsset{compat=1.18}
 
