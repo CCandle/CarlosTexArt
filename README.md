@@ -122,6 +122,12 @@ kpsewhich pgfplots.sty
 | latexmk-xelatex | 推荐默认方式，自动处理 XeLaTeX 和 biber |
 | xelatex -> biber -> xelatex*2 | 手动全量编译方式，适合排查参考文献问题 |
 
+## CircuitikZ 电路图
+
+CarlosTexArt 类文件已加载 CircuitikZ，默认使用矩形电阻与线圈形电感的混合风格：电阻采用 europeanresistors，电感采用 cuteinductors，电容保持常见的平行极板符号。这里刻意不使用全局 european 选项，因为它会把电感也画成矩形块。
+
+编写电路图时直接使用 circuitikz 环境，不要额外指定 american 或 european 环境选项。可参考 page/examples/circuitikz.tex 中的 RLC 串联电路示例。
+
 ## 常用模板命令
 
 | 命令/环境 | 用途 |
