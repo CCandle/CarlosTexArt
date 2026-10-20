@@ -53,6 +53,10 @@ cover/
 
 正文入口是 `page/content.tex`。摘要在 `page/abstract_zh.tex` 和 `page/abstract_en.tex`，附录在 `page/appendix.tex`。
 
+## CircuitikZ 电路图
+
+CarlosTexArt 默认使用矩形电阻与线圈形电感的混合风格（europeanresistors + cuteinductors）。类文件已经加载 CircuitikZ，直接使用 circuitikz 环境即可；不要额外指定 american 或 european 环境选项，以免覆盖默认样式。
+
 ## 标题与作者
 
 在 `main.tex` 中填写：
